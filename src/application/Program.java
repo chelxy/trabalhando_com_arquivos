@@ -1,29 +1,27 @@
 package application;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class Program {
-//Bloco try-with-resources
+
 	public static void main(String[] args) {
 
-		// Criar o caminho do meu arquivo
-		String path = "c:\\temp\\in.txt";
+		String[] lines = new String[] { "Good morning", "Good afternoon", "Good night" };
 
-		// Criar um bloco try para tentar abrir o arquivo in.txt e ler também.
-		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+		String path = "c:\\temp\\out.txt";
+		
+		/*Cria/recria o arquivo: new FileWriter(path)
+		Acrescenta ao arquivo existente: new FileWriter(path, true)*/
 
-			// Criar uma String para uma linha do meu arquivo.
-			String line = br.readLine();// esse readLine() ler o o arquivo até o final e retorna null
-
-			while (line != null) {
-				System.out.println(line);
-				// mando ler a linha novamente fazeno um br.readLine
-				line = br.readLine();
+		try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))) {
+			for (String line : lines) {
+				bw.write(line);// escrever a linha no arquivo
+				bw.newLine();// quebra de linha
 			}
 		} catch (IOException e) {
-			System.out.println("Error: " + e.getMessage());
+			e.printStackTrace();
 		}
 
 	}
