@@ -1,39 +1,51 @@
 package application;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class Program {
-
+//versão manual
 	public static void main(String[] args) {
 
-		File file = new File("c:\\temp\\in.txt");
-		Scanner sc = null;
+		//Criar o caminho do meu arquivo
+		String path = "c:\\temp\\in.txt";
+		//criar uma variável FileReader e inicia com null
+		FileReader fr = null;
+		//criar o BufferReader e inicia com null
+		BufferedReader br = null;
+		
+		//Criar um bloco try para tentar abrir o arquivo in.txt e ler também.
 		try {
-			sc = new Scanner(file);
-			// testar se ainda existe uma nova linha no arquivo
-			while (sc.hasNextLine()) {
-				// imprimir a linha do arquivo
-				System.out.println(sc.nextLine());
+			fr = new FileReader(path);
+			br = new BufferedReader(fr);/*O BufferedReader é instanciado
+			a partir do meu FileReader.*/
+			//Criar uma String para uma linha do meu arquivo.
+			String line = br.readLine();//esse readLine() ler o o arquivo até o final e retorna null
+			
+			while(line != null) {
+				System.out.println(line);
+				//mando ler a linha novamente fazeno um br.readLine
+				line = br.readLine();
 			}
-			// sc.close();
-			/*
-			 * Se eu colocar o sc.close aqui, pode ocorrer algum erro, pular para o bloco
-			 * catch e não fechar o Scanner.
-			 */
-
-		} catch (FileNotFoundException e) {
+		}
+		catch(IOException e) {
 			System.out.println("Error: " + e.getMessage());
 		}
-		// Por isso cria um bloco finally para fechar o Scanner. Isso é uma boa prática.
+		//Criar um bloco finally para fechar essa duas streams(FileReader e BufferedReader)
 		finally {
-			/*tem que colocar o sc.close dentro de um if para não dar um nullPointerException, 
-			pois o sc vai tá valendo null*/
-			if (sc != null) {
-				sc.close();
+			//Então cria-se um bloco try para tratar essa exceção
+			try {
+				if(br != null) {
+					br.close();//Tipo de exceção não tratada IOException
+				}
+				if(fr != null) {
+					fr.close();//Tipo de exceção não tratada IOException
+				}
+			}
+			catch(IOException e){
+				e.printStackTrace();
 			}
 		}
 	}
-
 }
