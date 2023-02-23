@@ -4,31 +4,19 @@ import java.io.File;
 import java.util.Scanner;
 
 public class Program {
-//Manipulando pastas com File
+//Informações do caminho do arquivo
 	public static void main(String[] args) {
 
 		Scanner sc = new Scanner(System.in);
 
-		System.out.print("Enter a folder path: ");
+		System.out.print("Enter a file path: ");
 		String strPath = sc.nextLine();
 
 		File path = new File(strPath);
-		// listar o que for diretório
-		File[] folders = path.listFiles(File::isDirectory);
-		System.out.println("Folders:");
-		for (File folder : folders) {
-			System.out.println(folder);
-		}
-		//Listar a lista de arquivos
-		File[] files = path.listFiles(File::isFile);
-		System.out.println("Files:");
-		for (File file : files) {
-			System.out.println(file);	
-		}
-		
-		//Criar uma subpasta a partir da pasta temp
-		boolean success = new File(strPath + "\\subfolder").mkdir();
-		System.out.println("Directory created successfully: " + success);
+
+		System.out.println("getName: " + path.getName());//somente o nome do arquivo
+		System.out.println("getParent: " + path.getParent());//somente o caminho
+		System.out.println("getPath: " + path.getPath());//todo o caminho
 
 		sc.close();
 	}
